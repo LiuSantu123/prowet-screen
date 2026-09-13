@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Activate screen-core first, or provide its interpreter through SCREEN_PYTHON.
+# Activate screen2 first, or provide its interpreter through SCREEN_PYTHON.
 set -euo pipefail
 SCREEN_REPO=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 SCREEN_PYTHON=${SCREEN_PYTHON:-python}

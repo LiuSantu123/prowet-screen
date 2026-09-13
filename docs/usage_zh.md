@@ -5,7 +5,7 @@
 Protein Screen 将原来的九模型 screen 脚本整理为可安装、可配置的 CLI/Python 工具。
 输入为 FASTA，可附 PDB/mmCIF；输出为含原始分数、状态、模型覆盖率和排序的 CSV。
 
-全部九模型推荐参考[两环境安装与配置](minimal_environment_zh.md)：`screen-core + masif`，
+全部九模型推荐参考[两环境安装与配置](minimal_environment_zh.md)：`screen2 + masif`，
 包含公开启动脚本、两环境配置模板、APBS依赖及10设计90/90验收说明。下方是仅主控的轻量安装。
 
 ## 安装主环境

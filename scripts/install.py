@@ -89,7 +89,7 @@ class Installer:
         self.a = args
         self.root = args.prefix.resolve()
         self.models = self.root / 'models'
-        self.core = self.root / 'envs/screen-core'
+        self.core = self.root / 'envs/screen2'
         self.masif = self.root / 'envs/masif'
         self.py = self.core / 'bin/python'
         self.sdk = self.root / 'esm-sdk-3.1.1'
@@ -313,7 +313,7 @@ class Installer:
                      'SCREEN_ESM_SDK': self.sdk, 'SCREEN_HF_CACHE': self.hf,
                      'SCREEN_PROTBERT': self.root / 'prot_bert_bfd'}
         import string
-        config = json.loads(string.Template((REPO / 'examples/config.screen-core.json').read_text()).substitute(
+        config = json.loads(string.Template((REPO / 'examples/config.screen2.json').read_text()).substitute(
             {k: str(v).replace('\\', '\\\\').replace('"', '\\"') for k, v in variables.items()}))
         for model in NAMES:
             config['env'].setdefault(model, {}).update({'HF_HUB_CACHE': str(self.hf), 'TORCH_HOME': str(self.torch)})

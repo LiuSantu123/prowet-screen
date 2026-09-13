@@ -23,7 +23,7 @@ TemBERTure runners are selected automatically, or overridden via `*_run`.
 ## Recommended installation
 
 Use [the fresh-cluster installer](install_zh.md) for new Linux x86_64 clusters.
-It installs modern models in screen-core, ESM SDK 3.1.1 in a separate module
+It installs modern models in screen2, ESM SDK 3.1.1 in a separate module
 directory using the same interpreter, and MaSIF in Python 3.7. The installer
 uses `envs/fresh-core-requirements.txt` and `envs/fresh-masif-requirements.txt`.
 The older `models.yml` and consolidation overlay are historical recipes.

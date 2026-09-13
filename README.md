@@ -14,7 +14,7 @@ git clone https://github.com/LiuSantu123/protein-screen.git && bash protein-scre
 ```
 
 See [空白集群安装与逐模型权重指引](docs/install_zh.md). This creates isolated
-`screen-core` + `masif` environments, builds EvoEF2, fetches external assets, and
+`screen2` + `masif` environments, builds EvoEF2, fetches external assets, and
 writes a prefix-specific launcher/config plus a failure report. NetSolP ONNX
 requires the official download package; gated models need upstream access.
 Six permissively licensed source subsets are included in [third_party](third_party/README.md).
@@ -38,9 +38,9 @@ The recipe runs `pip install -e .`, so run it from the repository root.
 Alternatively, install this package using `pip install .` in Python 3.10.12+.
 
 A tested two-environment setup for all nine models is documented in
-[最小环境与九模型验收](docs/minimal_environment_zh.md): **screen-core + masif**.
+[最小环境与九模型验收](docs/minimal_environment_zh.md): **screen2 + masif**.
 It now includes a portable `scripts/screen.sh` launcher, a
-[`config.screen-core.json`](examples/config.screen-core.json) template, observed
+[`config.screen2.json`](examples/config.screen2.json) template, observed
 package inventories and explicit APBS binary/shared-library requirements.
 Validation covers public 1UBQ plus 10 private designs across two GPU nodes
 (90/90 model statuses passed after a Pro4S dependency repair and targeted retry).

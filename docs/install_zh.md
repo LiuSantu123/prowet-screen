@@ -22,9 +22,9 @@ bash protein-screen/install.sh --plan
 bash protein-screen/install.sh --prefix "$HOME/software/protein-screen-runtime" --conda /path/to/conda
 ```
 
-默认安装九模型，建立 `PREFIX/envs/screen-core`（Python 3.10）与
+默认安装九模型，建立 `PREFIX/envs/screen2`（Python 3.10）与
 `PREFIX/envs/masif`（Python 3.7）。ESM SDK 3.1.1 置于独立模块目录，仍使用
-screen-core 的 Python；iFeatureOmegaCLI 所需的旧 matplotlib 3.4.3 由 conda 安装预编译包，避免 Python 3.10 上临时编译。EvoEF2 直接编译，不增加第三个环境。固定 adapters
+screen2 的 Python；iFeatureOmegaCLI 所需的旧 matplotlib 3.4.3 由 conda 安装预编译包，避免 Python 3.10 上临时编译。EvoEF2 直接编译，不增加第三个环境。固定 adapters
 上游提交；DGL 2.1 的未使用 GraphBolt 加载入口做窄范围兼容修改并保留原文件。
 MaSIF 从官方 PyMesh 0.3 Linux cp37 wheel 安装，同时由 conda 安装 APBS 1.5
 与 MSMS 2.6.1，并用 APBS 包附带源码编译 `multivalue`（校验源码、生成

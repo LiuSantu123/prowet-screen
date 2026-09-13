@@ -4,12 +4,12 @@
 
 目标是保留全部九个评分模型、原权重和 Pro4S 表面预处理，尽量合并 Python/PyTorch 安装。
 **本次实际验证的最少配置为两个 conda 环境。**
-独立 `screen-core` 主控启动的九模型统一运行全部成功（9/9，退出码 0）；
+独立 `screen2` 主控启动的九模型统一运行全部成功（9/9，退出码 0）；
 主环境 `pip check` 无冲突、14 项 unittest 全通过。公开 1UBQ 验收后，追加两台 Linux GPU 节点的10设计批量验证：90/90模型状态通过，120个主要指标有效（其中一节点修复APBS依赖后仅补跑Pro4S）。
 
 | 运行部分 | 已验证运行环境 |
 |---|---|
-| 主控、NetSolP、RP3Net、GATSol、Pro4S 推理、TemBERTure、TemStaPro、ESMC、ESM3 | screen-core：Python 3.10.21、Torch 2.5.1 CUDA 11.8、Transformers 4.46.3、NumPy 1.26.4 |
+| 主控、NetSolP、RP3Net、GATSol、Pro4S 推理、TemBERTure、TemStaPro、ESMC、ESM3 | screen2：Python 3.10.21、Torch 2.5.1 CUDA 11.8、Transformers 4.46.3、NumPy 1.26.4 |
 | Pro4S 的 MaSIF/PyMesh 表面预处理 | 现有 masif：Python 3.7 |
 | EvoEF2 | 原生 C++ 可执行程序，由主控调用，不需要第三个 Python 环境 |
 
@@ -36,8 +36,8 @@
 它不是从空白 Linux 系统安装所有第三方模型的完整配方。
 
 ```bash
-conda create -n screen-core --clone screening
-conda activate screen-core
+conda create -n screen2 --clone screening
+conda activate screen2
 python -m pip install -r envs/minimal-core-requirements.txt
 python -m pip install -e .
 python -m pip install --no-deps --target "$PWD/.local/esm-sdk-3.1.1" esm==3.1.1
@@ -51,7 +51,7 @@ python -m unittest discover -s tests -v
 
 `screening` 克隆源需为 Python 3.10.12+（3.10 系列），并已有可运行的
 NetSolP/RP3Net/GATSol/Pro4S 依赖。配置中的现代模型 `*_py` 全部设为
-`screen-core/bin/python`；`masif_py` 保留旧环境。
+`screen2/bin/python`；`masif_py` 保留旧环境。
 `temstapro` 指向生成的新 launcher，`temstapro_dir` 仍指向原完整仓库。
 ESMC/ESM3 的 `env.<model>.PYTHONPATH` 指向 SDK 目录；
 TemBERTure 的 `PYTHONPATH` 指向上游包含 `temBERTure.py` 的目录，
@@ -93,7 +93,7 @@ ESM3 的 SDK/Torch 组合改变后存在约 0.0304% 数值差异，不宣称逐�
 
 ## 独立两环境最终验收
 
-现代模型和主控全部使用 `screen-core/bin/python`，仅 MaSIF 使用旧 `masif`。
+现代模型和主控全部使用 `screen2/bin/python`，仅 MaSIF 使用旧 `masif`。
 
 | 指标 | 1UBQ 实测值 |
 |---|---|
@@ -121,7 +121,7 @@ v0.1.0 验收中的 0.8273101 来自 Distilled 配置，不能直接当作同模
 在仓库根目录运行；以下 `/path/to` 都需要替换为实际绝对路径。
 
 ```bash
-conda activate screen-core
+conda activate screen2
 export SCREEN_CORE_PREFIX="$CONDA_PREFIX"
 export SCREEN_MASIF_PREFIX=/path/to/conda/envs/masif
 export SCREEN_MODELS=/path/to/model-repositories
@@ -131,7 +131,7 @@ export SCREEN_HF_CACHE=/path/to/huggingface/hub
 export SCREEN_PROTBERT=/path/to/complete/prot_bert_bfd/snapshot
 export SCREEN_APBS_ROOT=/path/to/apbs15
 mkdir -p .local
-cp examples/config.screen-core.json .local/config.json
+cp examples/config.screen2.json .local/config.json
 bash scripts/screen.sh doctor
 bash scripts/screen.sh run examples/1ubq.fasta examples/1ubq.pdb \
   --models netsolp rp3net temberture temstapro esmc esm3 gatsol pro4s evoef2 \
@@ -141,7 +141,7 @@ bash scripts/screen.sh run examples/1ubq.fasta examples/1ubq.pdb \
 模板假定模型目录名为 NetSolP、RP3Net、TemBERTure、TemStaPro、GATSol、Pro4S、EvoEF2；
 按自己的安装修改 JSON。所有变量必须先设置；`env` 中的路径使用绝对路径。
 ESMC 和 ESM3 可在 JSON 中分别指定不同的缓存目录，均需完整权重。
-`SCREEN_CONFIG` 可覆盖配置文件位置，`SCREEN_PYTHON` 可指定 screen-core 的绝对解释器路径；
+`SCREEN_CONFIG` 可覆盖配置文件位置，`SCREEN_PYTHON` 可指定 screen2 的绝对解释器路径；
 脚本默认使用当前激活环境的 python，不会自动激活或创建 conda 环境。
 直接使用 `protein-screen run` 时，需自行传入 `--config`、`--apbs-bin`、`--multivalue-bin`。
 
@@ -149,10 +149,10 @@ ESMC 和 ESM3 可在 JSON 中分别指定不同的缓存目录，均需完整权
 
 - 已验证安装路线：克隆现有可运行的 Python 3.10 screening，再应用
   `envs/minimal-core-requirements.txt`；Torch明确固定为CUDA11.8构建 `2.5.1+cu118`。
-- `envs/screen-core-bootstrap.yml` 仅创建 Python 与合并依赖的起始环境，
-  运行命令为 `conda env create -f envs/screen-core-bootstrap.yml`（仓库根目录）。
+- `envs/screen2-bootstrap.yml` 仅创建 Python 与合并依赖的起始环境，
+  运行命令为 `conda env create -f envs/screen2-bootstrap.yml`（仓库根目录）。
   尚未从空白环境验收；仍需第三方模型依赖、DGL兼容处理、模型源码和权重。
-- `envs/screen-core-observed.tsv`、`envs/masif-observed.tsv` 记录实测环境的包名、版本、构建。
+- `envs/screen2-observed.tsv`、`envs/masif-observed.tsv` 记录实测环境的包名、版本、构建。
   这是环境盘点，不是锁文件；不能恢复本机二进制补丁、editable源码或外置SDK。
 - masif继续复用已工作的Python3.7/PyMesh环境；未提供声称可从零重建的MaSIF配方。
   使用上游支持的旧环境，并验收完整表面预处理。
