@@ -28,7 +28,7 @@ def screen(
     cmd = [
         sys.executable,
         "-m",
-        "protein_screen",
+        "prowet",
         "run",
         str(fasta),
         "-o",

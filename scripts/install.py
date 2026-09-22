@@ -73,7 +73,7 @@ def copy_verified(source, target, expected):
 def patch_graphbolt(site):
     """DGL 2.1 GraphBolt is unused by these inference paths; skip its ABI loader."""
     path = site / 'dgl/graphbolt/__init__.py'
-    marker = '# protein-screen: GraphBolt not used; Torch 2.5 has no DGL 2.1 binary'
+    marker = '# prowet: GraphBolt not used; Torch 2.5 has no DGL 2.1 binary'
     value = path.read_text()
     if marker in value:
         return
@@ -313,7 +313,7 @@ class Installer:
                      'SCREEN_ESM_SDK': self.sdk, 'SCREEN_HF_CACHE': self.hf,
                      'SCREEN_PROTBERT': self.root / 'prot_bert_bfd'}
         import string
-        config = json.loads(string.Template((REPO / 'examples/config.screen2.json').read_text()).substitute(
+        config = json.loads(string.Template((REPO / 'examples/config.prowet.json').read_text()).substitute(
             {k: str(v).replace('\\', '\\\\').replace('"', '\\"') for k, v in variables.items()}))
         for model in NAMES:
             config['env'].setdefault(model, {}).update({'HF_HUB_CACHE': str(self.hf), 'TORCH_HOME': str(self.torch)})
@@ -330,9 +330,9 @@ class Installer:
         launcher.write_text('#!/usr/bin/env bash\nset -euo pipefail\ncommand=${1:-}\n'
             'if [[ "$command" == run || "$command" == doctor ]]; then\n  shift\n'
             '  extra=()\n  if [[ "$command" == run ]]; then extra=(' + shell_join(options) + '); fi\n'
-            '  exec ' + shlex.quote(str(self.py)) + ' -m protein_screen "$command" --config '
+            '  exec ' + shlex.quote(str(self.py)) + ' -m prowet "$command" --config '
             + shlex.quote(str(self.root / 'config.json')) + ' "${extra[@]}" "$@"\nfi\nexec '
-            + shlex.quote(str(self.py)) + ' -m protein_screen "$@"\n')
+            + shlex.quote(str(self.py)) + ' -m prowet "$@"\n')
         launcher.chmod(0o755)
         (self.root / 'activate.sh').write_text('export PATH=' + shlex.quote(str(self.root / 'bin')) + ':"$PATH"\n')
 
@@ -404,7 +404,7 @@ def main(argv=None):
         unexpected = set(p.name for p in installer.root.iterdir()) - {'miniforge', 'downloads', 'install.log'}
         if unexpected:
             raise ValueError('Use an empty dedicated --prefix; found ' + ', '.join(sorted(unexpected)))
-        marker.write_text('protein-screen installer v1\n')
+        marker.write_text('prowet installer v1\n')
     with (installer.root / '.install.lock').open('w') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         report = {'models': args.models, 'stages': {}, 'started': time.strftime('%Y-%m-%dT%H:%M:%S%z')}

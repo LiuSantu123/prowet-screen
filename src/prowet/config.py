@@ -20,7 +20,7 @@ MODEL_KEYS = {
 
 def load_config(path=None):
     keys = {k for items in MODEL_KEYS.values() for k in items}
-    missing = Path("/__protein_screen_unconfigured__")
+    missing = Path("/__prowet_unconfigured__")
     defaults = {k: missing / k for k in keys}
     defaults.update(
         {k: Path(sys.executable) for k in keys if k.endswith("_py") and k != "masif_py"}

@@ -9,17 +9,17 @@
 ## 一条命令克隆并安装
 
 ```bash
-git clone https://github.com/LiuSantu123/protein-screen.git && bash protein-screen/install.sh --prefix "$HOME/software/protein-screen-runtime"
+git clone https://github.com/LiuSantu123/prowet-screen.git && bash prowet-screen/install.sh --prefix "$HOME/software/prowet-runtime"
 ```
 
 也提供独立 `scripts/bootstrap-cluster.sh`：先下载并查看脚本，再执行
-`bash bootstrap-cluster.sh protein-screen --prefix "$HOME/software/protein-screen-runtime"`。
+`bash bootstrap-cluster.sh prowet --prefix "$HOME/software/prowet-runtime"`。
 已有目标目录时该脚本拒绝覆盖；断点重跑直接使用仓库内的 `install.sh`。
 `--prefix` 必须是专用的新目录；不会修改已有命名环境或 shell 启动文件。
 
 ```bash
-bash protein-screen/install.sh --plan
-bash protein-screen/install.sh --prefix "$HOME/software/protein-screen-runtime" --conda /path/to/conda
+bash prowet/install.sh --plan
+bash prowet/install.sh --prefix "$HOME/software/prowet-runtime" --conda /path/to/conda
 ```
 
 默认安装九模型，建立 `PREFIX/envs/screen2`（Python 3.10）与
@@ -58,7 +58,7 @@ HF 需要授权时，先在官方模型页面申请/接受对应条款，再在�
 保留缓存快照提交，但目前配方不属于包含全部权重校验值的离线锁定包。
 
 ```bash
-bash protein-screen/install.sh --prefix "$HOME/software/protein-screen-runtime" \
+bash prowet/install.sh --prefix "$HOME/software/prowet-runtime" \
   --netsolp-models /path/to/downloaded/models \
   --gatsol-checkpoint /path/to/best_model.tar.gz
 ```
@@ -78,7 +78,7 @@ bash protein-screen/install.sh --prefix "$HOME/software/protein-screen-runtime" 
 如果集群已提供原生工具，可覆盖路径：
 
 ```bash
-bash protein-screen/install.sh --prefix "$HOME/software/protein-screen-runtime" \
+bash prowet/install.sh --prefix "$HOME/software/prowet-runtime" \
   --msms-bin /path/to/msms --apbs-bin /path/to/apbs --multivalue-bin /path/to/multivalue
 ```
 
@@ -89,12 +89,12 @@ APBS 需要相邻 `../lib` 或 `../lib64` 下的共享库；运行器会加入�
 ## 使用与验收
 
 ```bash
-source "$HOME/software/protein-screen-runtime/activate.sh"
+source "$HOME/software/prowet-runtime/activate.sh"
 screen doctor --models evoef2
-screen run protein-screen/examples/1ubq.fasta protein-screen/examples/1ubq.pdb \
+screen run prowet/examples/1ubq.fasta prowet/examples/1ubq.pdb \
   --models evoef2 -o /tmp/1ubq-evoef2.csv
 # 在 GPU 作业中验收九模型；逐列检查 *_status 和原始分数
-screen run protein-screen/examples/1ubq.fasta protein-screen/examples/1ubq.pdb \
+screen run prowet/examples/1ubq.fasta prowet/examples/1ubq.pdb \
   --models netsolp rp3net temberture temstapro esmc esm3 gatsol pro4s evoef2 \
   -o /tmp/1ubq-all.csv
 ```

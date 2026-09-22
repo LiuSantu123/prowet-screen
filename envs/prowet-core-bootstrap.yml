@@ -1,6 +1,6 @@
 # Bootstrap only. Not a complete nine-model installation or a validated fresh install.
 # The validated route clones an existing screening environment; see docs/minimal_environment_zh.md.
-name: screen-core
+name: prowet-core
 channels:
   - conda-forge
   - nodefaults

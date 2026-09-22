@@ -8,8 +8,8 @@ import tarfile
 import tempfile
 import unittest
 from pathlib import Path
-from protein_screen import engine, screen
-from protein_screen.config import load_config
+from prowet import engine, screen
+from prowet.config import load_config
 
 
 class ScreeningTests(unittest.TestCase):
@@ -20,7 +20,7 @@ class ScreeningTests(unittest.TestCase):
 
     def cli(self, *args):
         return subprocess.run(
-            [sys.executable, "-m", "protein_screen", *map(str, args)],
+            [sys.executable, "-m", "prowet", *map(str, args)],
             capture_output=True,
             text=True,
         )

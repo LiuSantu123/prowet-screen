@@ -1,6 +1,6 @@
 # Release validation — v0.1.0
 
-Validated on 2026-09-08, Linux x86_64. The dedicated `protein-screen` conda
+Validated on 2026-09-08, Linux x86_64. The dedicated `prowet` conda
 controller environment uses Python 3.11.16, gemmi 0.7.5, h5py 3.16.0,
 numpy 2.4.6 and openpyxl 3.1.5. Exact conda and pip runtime versions are
 recorded in `envs/conda-linux-64.lock` and `envs/controller-pip.txt`.

@@ -131,7 +131,7 @@ export SCREEN_HF_CACHE=/path/to/huggingface/hub
 export SCREEN_PROTBERT=/path/to/complete/prot_bert_bfd/snapshot
 export SCREEN_APBS_ROOT=/path/to/apbs15
 mkdir -p .local
-cp examples/config.screen2.json .local/config.json
+cp examples/config.prowet.json .local/config.json
 bash scripts/screen.sh doctor
 bash scripts/screen.sh run examples/1ubq.fasta examples/1ubq.pdb \
   --models netsolp rp3net temberture temstapro esmc esm3 gatsol pro4s evoef2 \
@@ -143,7 +143,7 @@ bash scripts/screen.sh run examples/1ubq.fasta examples/1ubq.pdb \
 ESMC 和 ESM3 可在 JSON 中分别指定不同的缓存目录，均需完整权重。
 `SCREEN_CONFIG` 可覆盖配置文件位置，`SCREEN_PYTHON` 可指定 screen2 的绝对解释器路径；
 脚本默认使用当前激活环境的 python，不会自动激活或创建 conda 环境。
-直接使用 `protein-screen run` 时，需自行传入 `--config`、`--apbs-bin`、`--multivalue-bin`。
+直接使用 `prowet run` 时，需自行传入 `--config`、`--apbs-bin`、`--multivalue-bin`。
 
 ## Conda 与原生依赖边界
 

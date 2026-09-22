@@ -123,7 +123,7 @@ class InstallerTests(unittest.TestCase):
             obj.py.chmod(0o755)
             launcher = obj.root / 'bin/screen'
             args = json.loads(subprocess.check_output([str(launcher), 'run', 'input with spaces', '--models', 'evoef2'], text=True))
-            self.assertEqual(args[:4], ['-m', 'protein_screen', 'run', '--config'])
+            self.assertEqual(args[:4], ['-m', 'prowet', 'run', '--config'])
             self.assertIn('input with spaces', args)
             self.assertIn('--apbs-bin', args)
             args = json.loads(subprocess.check_output([str(launcher), 'doctor'], text=True))

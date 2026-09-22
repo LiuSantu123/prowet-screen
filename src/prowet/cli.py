@@ -15,7 +15,7 @@ def main(argv=None):
         try:
             return run(argv[1:])
         except (ValueError, OSError) as exc:
-            print(f"protein-screen: {exc}", file=sys.stderr)
+            print(f"prowet: {exc}", file=sys.stderr)
             return 2
     p = argparse.ArgumentParser(
         description="Configurable protein sequence/structure screening"
@@ -96,5 +96,5 @@ def main(argv=None):
         print(f"wrote {len(rows)} rows: {a.output}")
         return 0
     except (ValueError, OSError) as exc:
-        print(f"protein-screen: {exc}", file=sys.stderr)
+        print(f"prowet: {exc}", file=sys.stderr)
         return 2

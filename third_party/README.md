@@ -2,7 +2,7 @@
 
 This directory contains selected upstream source files, copied without content
 changes from the revisions in `manifest.json`. Each project retains its original
-license. The top-level Protein Screen MIT license applies to our integration,
+license. The top-level ProWet MIT license applies to our integration,
 not as a replacement for these notices. Upstream READMEs describe the full
 projects; training data, most training tools and model weights are **not** bundled.
 

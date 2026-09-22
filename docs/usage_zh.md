@@ -2,7 +2,7 @@
 
 空白集群请优先使用[一键安装指南](install_zh.md)；本文原有环境配置/迁移方法仍供参考。
 
-Protein Screen 将原来的九模型 screen 脚本整理为可安装、可配置的 CLI/Python 工具。
+ProWet 将原来的九模型 screen 脚本整理为可安装、可配置的 CLI/Python 工具。
 输入为 FASTA，可附 PDB/mmCIF；输出为含原始分数、状态、模型覆盖率和排序的 CSV。
 
 全部九模型推荐参考[两环境安装与配置](minimal_environment_zh.md)：`screen2 + masif`，
@@ -11,11 +11,11 @@ Protein Screen 将原来的九模型 screen 脚本整理为可安装、可配置
 ## 安装主环境
 
 ```bash
-git clone https://github.com/LiuSantu123/protein-screen.git
-cd protein-screen
+git clone https://github.com/LiuSantu123/prowet-screen.git
+cd prowet-screen
 conda env create -f environment.yml
-conda activate protein-screen
-protein-screen rank examples/scores.csv -o output/ranked.csv
+conda activate prowet
+prowet rank examples/scores.csv -o output/ranked.csv
 ```
 
 主环境负责调度、结构处理和结果汇总，不包含九个模型的权重及所有推理依赖。
@@ -25,15 +25,15 @@ MaSIF 的旧依赖不能直接塞进现代 PyTorch 环境。
 ## 预测
 
 ```bash
-protein-screen doctor --config config.json --models netsolp rp3net
-protein-screen run input.fasta --config config.json \
+prowet doctor --config config.json --models netsolp rp3net
+prowet run input.fasta --config config.json \
   --models netsolp rp3net --device cuda -o output/screen.csv
 ```
 
 有结构时增加 `--structures structures/`。模型可选：netsolp、rp3net、temberture、
 temstapro、esmc、esm3、gatsol、pro4s、evoef2。
 GATSol/Pro4S 适配器需要 GPU；EvoEF2 为 CPU 程序。
-支持参数详见 `protein-screen run --help`，Python API 见主 README。
+支持参数详见 `prowet run --help`，Python API 见主 README。
 
 FASTA 使用唯一、简短 ID，仅支持字母、数字、点、下划线、连字符和20种标准氨基酸。
 结构文件按 ID 精确匹配，例如 `design1.cif`，不再用可能混淆 design1/design10 的前缀匹配。

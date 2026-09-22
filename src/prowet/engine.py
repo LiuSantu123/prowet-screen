@@ -1080,7 +1080,7 @@ def main(argv=None) -> int:
         if structure_for(ident, a.structures) == a.output:
             p.error("output must not overwrite a structure input")
     score_rows([], a.weights_json)  # validate before launching models
-    with tempfile.TemporaryDirectory(prefix="protein_screen_") as td:
+    with tempfile.TemporaryDirectory(prefix="prowet_") as td:
         work = Path(td)
         a.fasta = work / "input.fasta"
         a.fasta.write_text("".join(f">{ident}\n{seq}\n" for ident, seq in records))

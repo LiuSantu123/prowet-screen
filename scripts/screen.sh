@@ -13,6 +13,6 @@ if [[ "$SCREEN_COMMAND" == run || "$SCREEN_COMMAND" == doctor ]]; then
     SCREEN_ARGS+=(--apbs-bin "$SCREEN_APBS_ROOT/bin/apbs"
                   --multivalue-bin "$SCREEN_APBS_ROOT/bin/multivalue")
   fi
-  exec "$SCREEN_PYTHON" -u -m protein_screen "$SCREEN_COMMAND" "${SCREEN_ARGS[@]}" "$@"
+  exec "$SCREEN_PYTHON" -u -m prowet "$SCREEN_COMMAND" "${SCREEN_ARGS[@]}" "$@"
 fi
-exec "$SCREEN_PYTHON" -u -m protein_screen "$@"
+exec "$SCREEN_PYTHON" -u -m prowet "$@"
